@@ -17,7 +17,6 @@ namespace Sodium
 			{
 				if (isInitialized) return;
 				InitializeBindings();
-				isInitialized = true;
 			}
 		}
 
@@ -38,6 +37,7 @@ namespace Sodium
 			};
 		}
 
+		[MethodImpl(MethodImplOptions.NoInlining)]
 		private static void InitializeBindings()
 		{
 			try
@@ -52,6 +52,7 @@ namespace Sodium
 				}
 				SetMisuseHandler(MisuseHandler);
 				SodiumInit();
+				isInitialized = true;
 			}
 			catch (DllNotFoundException e)
 			{
