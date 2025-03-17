@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sodium.Sample", "Sodium.Sample\Sodium.Sample.csproj", "{CE427E13-569D-47B5-9D55-99366196D5AF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sodium.Bindings", "Sodium.Bindings\Sodium.Bindings.csproj", "{1864C0C0-337A-4078-93C1-514B712708C2}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CE427E13-569D-47B5-9D55-99366196D5AF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CE427E13-569D-47B5-9D55-99366196D5AF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CE427E13-569D-47B5-9D55-99366196D5AF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CE427E13-569D-47B5-9D55-99366196D5AF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1864C0C0-337A-4078-93C1-514B712708C2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1864C0C0-337A-4078-93C1-514B712708C2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1864C0C0-337A-4078-93C1-514B712708C2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1864C0C0-337A-4078-93C1-514B712708C2}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
