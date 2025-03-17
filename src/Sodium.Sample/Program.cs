@@ -18,31 +18,31 @@ namespace Sodium.Sample
 			SodiumRandom.Close();
 			SodiumRandom.Stir();
 
-			var hex = SodiumHelpers.BinToHex(b1);
+			var hex = SodiumHexEncoding.BinToHex(b1);
 			Console.WriteLine($"Hex: {hex}");
 			Span<byte> bin = stackalloc byte[32];
-			bin = SodiumHelpers.HexToBin(hex, bin);
-			var areEquals = SodiumHelpers.Equals(b1, bin);
+			bin = SodiumHexEncoding.HexToBin(hex, bin);
+			var areEquals = SodiumBigUInt.Equals(b1, bin);
 			Console.WriteLine($"Are equals: {areEquals}");
 			
 
-			var len = SodiumHelpers.GetBase64EncodedLen(1, Base64Variant.UrlSafeNoPadding, includeNullTerminator: false);
+			var len = SodiumBase64Encoding.GetBase64EncodedLen(1, Base64Variant.UrlSafeNoPadding, includeNullTerminator: false);
 			Console.WriteLine($"Base64 encoded length: {len}");
 
-			var b64 = SodiumHelpers.BinToBase64(b1, Base64Variant.UrlSafeNoPadding);
+			var b64 = SodiumBase64Encoding.BinToBase64(b1, Base64Variant.UrlSafeNoPadding);
 			Console.WriteLine($"Base64: {b64}");
 			Span<byte> b64Bin = stackalloc byte[32];
-			b64Bin = SodiumHelpers.Base64ToBin(b64, b64Bin, Base64Variant.UrlSafeNoPadding);
-			areEquals = SodiumHelpers.Equals(b1, b64Bin);
+			b64Bin = SodiumBase64Encoding.Base64ToBin(b64, b64Bin, Base64Variant.UrlSafeNoPadding);
+			areEquals = SodiumBigUInt.Equals(b1, b64Bin);
 			Console.WriteLine($"Are equals: {areEquals}");
 
-			var b64EncodedLen = SodiumHelpers.GetBase64EncodedLen(32, Base64Variant.UrlSafeNoPadding, includeNullTerminator: false);
+			var b64EncodedLen = SodiumBase64Encoding.GetBase64EncodedLen(32, Base64Variant.UrlSafeNoPadding, includeNullTerminator: false);
 			Span<char> b64Chars = stackalloc char[b64EncodedLen];
-			b64Chars = SodiumHelpers.BinToBase64(b1, b64Chars, Base64Variant.UrlSafeNoPadding);
+			b64Chars = SodiumBase64Encoding.BinToBase64(b1, b64Chars, Base64Variant.UrlSafeNoPadding);
 
 			Span<byte> numberBytes = stackalloc byte[16];
 			Unsafe.WriteUnaligned(ref numberBytes[0], ulong.MaxValue);
-			SodiumHelpers.Increment(numberBytes, 1);
+			SodiumBigUInt.Increment(numberBytes, 1);
 			var incrementedLow = Unsafe.ReadUnaligned<ulong>(ref numberBytes[0]);
 			var incrementedHigh = Unsafe.ReadUnaligned<ulong>(ref numberBytes[8]);
 			Debug.Assert(incrementedLow == 0ul && incrementedHigh == 1ul);
@@ -52,7 +52,7 @@ namespace Sodium.Sample
 			Span<byte> b = stackalloc byte[32];
 			Unsafe.WriteUnaligned(ref a[0], 65535);
 			Unsafe.WriteUnaligned(ref b[0], 1);
-			SodiumHelpers.Add(a, b);
+			SodiumBigUInt.Add(a, b);
 			var added = Unsafe.ReadUnaligned<ulong>(ref a[0]);
 			Debug.Assert(added == 65536ul);
 
