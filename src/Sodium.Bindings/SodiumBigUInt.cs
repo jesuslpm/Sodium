@@ -1,11 +1,6 @@
 ﻿using Sodium.Interop;
-using System;
 using System.Buffers.Binary;
-using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Sodium
 {
@@ -27,16 +22,14 @@ namespace Sodium
 			return Libsodium.sodium_memcmp(b1, b2, (nuint)b1.Length) == 0;
 		}
 
+		public static void Increment(Span<byte> number)
+		{
+			SodiumBindings.EnsureInitialized();
+			Libsodium.sodium_increment(number, (nuint)number.Length);
+		}
+
 		public static void Increment(Span<byte> number, ulong increment)
 		{
-			// sodium_increment doesn't work
-			//if (increment > (ulong)nuint.MaxValue)
-			//{
-			//	throw new SodiumException($"increment must be less than or equal to {nuint.MaxValue}. But it is {increment}");
-			//}
-			//Libsodium.sodium_increment(number, (nuint)increment);
-
-			//So Let's do it using Add
 			SodiumBindings.EnsureInitialized();
 			Span<byte> b = stackalloc byte[number.Length];
 			if (BitConverter.IsLittleEndian)

@@ -44,7 +44,7 @@ namespace Sodium.Interop
 
 		[LibraryImport("libsodium")]
 		[UnmanagedCallConv(CallConvs = new[] { typeof(CallConvCdecl) })]
-		internal static partial void sodium_increment(Span<byte> number, nuint increment);
+		internal static partial void sodium_increment(Span<byte> number, nuint len);
 
 		[LibraryImport("libsodium")]
 		[UnmanagedCallConv(CallConvs = new[] { typeof(CallConvCdecl) })]
