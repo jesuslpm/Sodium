@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Sodium
 {
-	internal static class Constants
+	public static class Constants
 	{
 		internal const int MaxStackAlloc = 640;
 	}
