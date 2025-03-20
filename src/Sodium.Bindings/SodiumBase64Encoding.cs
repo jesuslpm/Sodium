@@ -1,8 +1,4 @@
 ﻿using Sodium.Interop;
-using System.Buffers.Binary;
-using System.Diagnostics;
-using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices;
 using System.Text;
 
 namespace Sodium
@@ -21,25 +17,46 @@ namespace Sodium
 	}
 
 
+	/// <summary>Provides methods for Base64 encoding and decoding.</summary>
 	public static class SodiumBase64Encoding
 	{
-
+		/// <summary>Calculates the maximum length of the decoded binary data from a Base64 string.</summary>
+		/// <param name="base64Len">The length of the Base64 string.</param>
+		/// <returns>The maximum length of the decoded binary data.</returns>
 		public static int GetBase64DecodedMaxLen(int base64Len)
 		{
 			return base64Len * 3 / 4;
 		}
 
+		/// <summary>Calculates the length of the Base64 encoded string for a given binary length.</summary>
+		/// <param name="binLen">The length of the binary data.</param>
+		/// <param name="variant">The Base64 variant to use.</param>
+		/// <param name="includeNullTerminator">Indicates whether to include a null terminator in the length calculation.</param>
+		/// <returns>The length of the Base64 encoded string.</returns>
 		public static int GetBase64EncodedLen(int binLen, Base64Variant variant, bool includeNullTerminator = true)
 		{
 			SodiumBindings.EnsureInitialized();
 			var len = (int)Libsodium.sodium_base64_encoded_len((nuint)binLen, (int)variant);
 			return includeNullTerminator ? len : len - 1;
 		}
+
+		/// <summary>Decodes a Base64 string into a binary representation.</summary>
+		/// <param name="b64">The Base64 string to decode.</param>
+		/// <param name="bin">The span to store the decoded binary data.</param>
+		/// <param name="variant">The Base64 variant to use.</param>
+		/// <param name="ignore">Characters to ignore during decoding.</param>
+		/// <returns>A span containing the decoded binary data.</returns>
 		public static Span<byte> Base64ToBin(string b64, Span<byte> bin, Base64Variant variant, string? ignore = null)
 		{
 			return Base64ToBin(b64.AsSpan(), bin, variant, ignore);
 		}
 
+		/// <summary>Decodes a Base64 string into a binary representation.</summary>
+		/// <param name="b64">The Base64 string to decode as a ReadOnlySpan.</param>
+		/// <param name="bin">The span to store the decoded binary data.</param>
+		/// <param name="variant">The Base64 variant to use.</param>
+		/// <param name="ignore">Characters to ignore during decoding.</param>
+		/// <returns>A span containing the decoded binary data.</returns>
 		public static Span<byte> Base64ToBin(ReadOnlySpan<char> b64, Span<byte> bin, Base64Variant variant, string? ignore = null)
 		{
 			SodiumBindings.EnsureInitialized();
@@ -59,6 +76,10 @@ namespace Sodium
 			return bin.Slice(0, (int)bin_len);
 		}
 
+		/// <summary>Encodes binary data into a Base64 string.</summary>
+		/// <param name="bin">The binary data to encode.</param>
+		/// <param name="variant">The Base64 variant to use.</param>
+		/// <returns>A Base64 encoded string.</returns>
 		public static string BinToBase64(ReadOnlySpan<byte> bin, Base64Variant variant)
 		{
 			SodiumBindings.EnsureInitialized();
@@ -76,6 +97,11 @@ namespace Sodium
 			return Encoding.ASCII.GetString(b64AsciiBytes.Slice(0, b64AsciiBytesLen - 1));
 		}
 
+		/// <summary>Encodes binary data into a Base64 representation and stores it in a character span.</summary>
+		/// <param name="bin">The binary data to encode.</param>
+		/// <param name="b64">The span to store the Base64 encoded data.</param>
+		/// <param name="variant">The Base64 variant to use.</param>
+		/// <returns>A span containing the Base64 encoded data.</returns>
 		public static Span<char> BinToBase64(ReadOnlySpan<byte> bin, Span<char> b64, Base64Variant variant)
 		{
 			SodiumBindings.EnsureInitialized();

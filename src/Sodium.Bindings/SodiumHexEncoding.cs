@@ -1,19 +1,18 @@
 ﻿using Sodium.Interop;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace Sodium
 {
+	/// <summary>
+	/// Provides methods for encoding and decoding hexadecimal strings and byte buffers.
+	/// </summary>
 	public static class SodiumHexEncoding
 	{
 		/// <summary>
 		/// Converts a byte buffer to a hexadecimal string in constant time for a given size.
 		/// </summary>
-		/// <param name="bin"></param>
-		/// <returns></returns>
+		/// <param name="bin">The byte buffer to convert.</param>
+		/// <returns>A hexadecimal string representation of the byte buffer.</returns>
 		public static string BinToHex(ReadOnlySpan<byte> bin)
 		{
 			SodiumBindings.EnsureInitialized();
@@ -31,6 +30,12 @@ namespace Sodium
 			return Encoding.ASCII.GetString(hexAsciiBytes.Slice(0, hexAsciiBytes.Length - 1));
 		}
 
+		/// <summary>
+		/// Converts a byte buffer to a hexadecimal string using a provided character span.
+		/// </summary>
+		/// <param name="bin">The byte buffer to convert.</param>
+		/// <param name="hex">The span to write the hexadecimal string into.</param>
+		/// <returns>A span containing the hexadecimal string representation.</returns>
 		public static Span<char> BinToHex(ReadOnlySpan<byte> bin, Span<char> hex)
 		{
 			SodiumBindings.EnsureInitialized();
@@ -53,11 +58,25 @@ namespace Sodium
 			return hex.Slice(0, hexAsciiBytesLen - 1);
 		}
 
+		/// <summary>
+		/// Converts a hexadecimal string to a byte buffer.
+		/// </summary>
+		/// <param name="hex">The hexadecimal string to convert.</param>
+		/// <param name="bin">The span to write the byte buffer into.</param>
+		/// <param name="ignore">Optional characters to ignore during conversion.</param>
+		/// <returns>A span containing the converted byte buffer.</returns>
 		public static Span<byte> HexToBin(string hex, Span<byte> bin, string? ignore = null)
 		{
 			return HexToBin(hex.AsSpan(), bin, ignore);
 		}
 
+		/// <summary>
+		/// Converts a span of characters representing a hexadecimal string to a byte buffer.
+		/// </summary>
+		/// <param name="hex">The span of characters representing the hexadecimal string.</param>
+		/// <param name="bin">The span to write the byte buffer into.</param>
+		/// <param name="ignore">Optional characters to ignore during conversion.</param>
+		/// <returns>A span containing the converted byte buffer.</returns>
 		public static Span<byte> HexToBin(ReadOnlySpan<char> hex, Span<byte> bin, string? ignore = null)
 		{
 			SodiumBindings.EnsureInitialized();

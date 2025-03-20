@@ -1,47 +1,63 @@
 ﻿using Sodium.Interop;
 using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices;
 
 namespace Sodium
 {
+	/// <summary>
+	/// Static class that manages the initialization and configuration of libsodium.
+	/// </summary>
 	public static partial class SodiumBindings
 	{
-		private static volatile bool isInitialized;
-		private static readonly object initLock = new object();
+		private static volatile bool isInitialized; // Indicates if the library has been initialized.
+		private static readonly object initLock = new object(); // Lock object for thread-safe initialization.
 
+		/// <summary>
+		/// Ensures that the libsodium library is initialized.
+		/// </summary>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		public static void EnsureInitialized()
 		{
-			if (isInitialized) return;
-			lock (initLock)
+			if (isInitialized) return; // If already initialized, exit.
+			lock (initLock) // Lock to ensure thread safety.
 			{
-				if (isInitialized) return;
-				InitializeBindings();
+				if (isInitialized) return; // Check again after acquiring the lock.
+				InitializeBindings(); // Initialize the bindings.
 			}
 		}
 
+		/// <summary>
+		/// Initializes the libsodium library.
+		/// </summary>
 		private static void SodiumInit()
 		{
 			// sodium_init() returns 0 on success, -1 on failure, and 1 if the library had already been initialized.
 			if (Libsodium.sodium_init() < 0)
 			{
-				throw new SodiumException("Failed to initialize libsodium.");
+				throw new SodiumException("Failed to initialize libsodium."); // Throw exception on failure.
 			};
 		}
 
+		/// <summary>
+		/// Sets a misuse handler for the libsodium library.
+		/// </summary>
+		/// <param name="handler">The action to handle misuse.</param>
 		private static void SetMisuseHandler(Action handler)
 		{
 			if (Libsodium.sodium_set_misuse_handler(handler) != 0)
 			{
-				throw new SodiumException("Failed to set misuse handler.");
+				throw new SodiumException("Failed to set misuse handler."); // Throw exception on failure.
 			};
 		}
 
+		/// <summary>
+		/// Initializes the bindings and checks for version compatibility.
+		/// </summary>
 		[MethodImpl(MethodImplOptions.NoInlining)]
 		private static void InitializeBindings()
 		{
 			try
 			{
+				// Check if the major and minor versions match.
 				if (SodiumVersion.GetMajor() != Libsodium.LIBSODIUM_VERSION_MAJOR ||
 					SodiumVersion.GetMinor() != Libsodium.LIBSODIUM_VERSION_MINOR)
 				{
@@ -50,9 +66,9 @@ namespace Sodium
 						? new SodiumException($"An error occurred while initializing cryptographic primitives. (Expected libsodium {Libsodium.SODIUM_VERSION_STRING} but found {version}.)")
 						: new SodiumException("An error occurred while initializing cryptographic primitives: version mismatch");
 				}
-				SetMisuseHandler(MisuseHandler);
-				SodiumInit();
-				isInitialized = true;
+				SetMisuseHandler(MisuseHandler); // Set the misuse handler.
+				SodiumInit(); // Initialize the library.
+				isInitialized = true; // Mark as initialized.
 			}
 			catch (DllNotFoundException e)
 			{
@@ -64,9 +80,12 @@ namespace Sodium
 			}
 		}
 
+		/// <summary>
+		/// Handler for misuse detected in the libsodium library.
+		/// </summary>
 		private static void MisuseHandler()
 		{
-			throw new SodiumException("Misuse detected");
+			throw new SodiumException("Misuse detected"); // Throw exception on misuse.
 		}
 	}
 }
