@@ -1,2 +1,2 @@
-# Sodium
-Sodium low level bindings and  high level classes
+# Sodium.Bindings
+Libsodium bindings for .NET
