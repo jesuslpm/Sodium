@@ -9,6 +9,10 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+		<InternalsVisibleTo Include="Sodium.Tests" />
+	</ItemGroup>
+
+	<ItemGroup>
 		<PackageReference Include="libsodium" Version="1.0.20.1" />
 		<PackageReference Include="System.Memory" Version="4.6.0" />
 	</ItemGroup>

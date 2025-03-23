@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sodium.Sample", "Sodium.Sam
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sodium.Bindings", "Sodium.Bindings\Sodium.Bindings.csproj", "{1864C0C0-337A-4078-93C1-514B712708C2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sodium.Tests", "Sodium.Tests\Sodium.Tests.csproj", "{F4B923E0-DAF9-4F8E-9CE1-080A4F4B2B3F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{1864C0C0-337A-4078-93C1-514B712708C2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1864C0C0-337A-4078-93C1-514B712708C2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1864C0C0-337A-4078-93C1-514B712708C2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F4B923E0-DAF9-4F8E-9CE1-080A4F4B2B3F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F4B923E0-DAF9-4F8E-9CE1-080A4F4B2B3F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F4B923E0-DAF9-4F8E-9CE1-080A4F4B2B3F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F4B923E0-DAF9-4F8E-9CE1-080A4F4B2B3F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

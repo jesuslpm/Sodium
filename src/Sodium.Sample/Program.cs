@@ -14,7 +14,7 @@ namespace Sodium.Sample
 			Span<byte> b1 = stackalloc byte[32];
 			SodiumRandom.Fill(b1);
 			Span<byte> b2 = stackalloc byte[32];
-			SodiumRandom.Fill(b2, b1);
+			SodiumRandom.FillDeterministic(b2, b1);
 			SodiumRandom.Close();
 			SodiumRandom.Stir();
 
