@@ -22,7 +22,7 @@ namespace Sodium
 			}
 			int hexAsciiBytesLen = bin.Length * 2 + 1;
 			Span<byte> hexAsciiBytes = hexAsciiBytesLen <= Constants.MaxStackAlloc ? stackalloc byte[hexAsciiBytesLen] : new byte[hexAsciiBytesLen];
-			var result = Libsodium.sodium_bin2hex(hexAsciiBytes, (nuint)hexAsciiBytes.Length, bin, (nuint)bin.Length);
+			var result = Libsodium.sodium_bin2hex(hexAsciiBytes, (nuint)hexAsciiBytesLen, bin, (nuint)bin.Length);
 			if (result == 0)
 			{
 				throw new SodiumException("sodium_bin2hex failed");
@@ -49,7 +49,7 @@ namespace Sodium
 			}
 			int hexAsciiBytesLen = bin.Length * 2 + 1;
 			Span<byte> hexAsciiBytes = hexAsciiBytesLen <= Constants.MaxStackAlloc ? stackalloc byte[hexAsciiBytesLen] : new byte[hexAsciiBytesLen];
-			var result = Libsodium.sodium_bin2hex(hexAsciiBytes, (nuint)hex.Length, bin, (nuint)bin.Length);
+			var result = Libsodium.sodium_bin2hex(hexAsciiBytes, (nuint)hexAsciiBytesLen, bin, (nuint)bin.Length);
 			if (result == 0)
 			{
 				throw new SodiumException("sodium_bin2hex failed");
