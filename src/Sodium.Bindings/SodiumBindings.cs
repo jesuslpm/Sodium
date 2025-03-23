@@ -25,6 +25,8 @@ namespace Sodium
 			}
 		}
 
+		public static bool IsInitialized => isInitialized;
+
 		/// <summary>
 		/// Initializes the libsodium library.
 		/// </summary>
