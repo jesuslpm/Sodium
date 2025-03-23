@@ -8,6 +8,11 @@ namespace Sodium
 	public static class SodiumRandom
 	{
 		/// <summary>
+		/// The length of the seed used for deterministic random byte generation.
+		/// </summary>
+		public const int SeedLen = (int) Libsodium.randombytes_SEEDBYTES;
+
+		/// <summary>
 		/// Gets a random unsigned 32-bit integer.
 		/// </summary>
 		/// <returns>A random unsigned 32-bit integer.</returns>
@@ -40,16 +45,17 @@ namespace Sodium
 
 		/// <summary>
 		/// Fills the specified buffer with deterministic random bytes based on the provided seed.
+		/// It produces the same sequence of random bytes for the same seed.
 		/// </summary>
 		/// <param name="buffer">The buffer to fill with deterministic random bytes.</param>
 		/// <param name="seed">The seed used for deterministic random byte generation.</param>
-		/// <exception cref="ArgumentException">Thrown when the seed length is not equal to Libsodium.randombytes_SEEDBYTES.</exception>
-		public static void Fill(Span<byte> buffer, ReadOnlySpan<byte> seed)
+		/// <exception cref="ArgumentException">Thrown when the seed length is not equal to SeedLen.</exception>
+		public static void FillDeterministic(Span<byte> buffer, ReadOnlySpan<byte> seed)
 		{
 			SodiumBindings.EnsureInitialized();
-			if (seed.Length != Libsodium.randombytes_SEEDBYTES)
+			if (seed.Length != SeedLen)
 			{
-				throw new ArgumentException($"seed must be {Libsodium.randombytes_SEEDBYTES} bytes in length", nameof(seed));
+				throw new ArgumentException($"seed must be {SeedLen} bytes in length", nameof(seed));
 			}
 			Libsodium.randombytes_buf_deterministic(buffer, (nuint)buffer.Length, seed);
 		}
