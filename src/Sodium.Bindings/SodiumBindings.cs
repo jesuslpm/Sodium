@@ -8,7 +8,7 @@ namespace Sodium
 	/// </summary>
 	public static partial class SodiumBindings
 	{
-		private static volatile bool isInitialized; // Indicates if the library has been initialized.
+		private static volatile bool _isInitialized; // Indicates if the library has been initialized.
 		private static readonly object initLock = new object(); // Lock object for thread-safe initialization.
 
 		/// <summary>
@@ -17,15 +17,15 @@ namespace Sodium
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		public static void EnsureInitialized()
 		{
-			if (isInitialized) return; // If already initialized, exit.
+			if (_isInitialized) return; // If already initialized, exit.
 			lock (initLock) // Lock to ensure thread safety.
 			{
-				if (isInitialized) return; // Check again after acquiring the lock.
+				if (_isInitialized) return; // Check again after acquiring the lock.
 				InitializeBindings(); // Initialize the bindings.
 			}
 		}
 
-		public static bool IsInitialized => isInitialized;
+		public static bool IsInitialized => _isInitialized;
 
 		/// <summary>
 		/// Initializes the libsodium library.
@@ -70,7 +70,7 @@ namespace Sodium
 				}
 				SetMisuseHandler(MisuseHandler); // Set the misuse handler.
 				SodiumInit(); // Initialize the library.
-				isInitialized = true; // Mark as initialized.
+				_isInitialized = true; // Mark as initialized.
 			}
 			catch (DllNotFoundException e)
 			{
