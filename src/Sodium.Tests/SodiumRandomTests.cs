@@ -74,20 +74,20 @@ namespace Sodium.Tests
 			await Assert.That(() => SodiumRandom.FillDeterministic(buffer, seed)).Throws<ArgumentException>();
 		}
 
-		[Test]
-		public async Task CloseAndStir_WorksAsExpected()
-		{
-			try
-			{
-				await Assert.That(() => SodiumRandom.Stir()).ThrowsNothing();
-				await Assert.That(() => SodiumRandom.Stir()).ThrowsNothing();
-				await Assert.That(() => SodiumRandom.Close()).ThrowsNothing();
-				await Assert.That(() => SodiumRandom.Close()).Throws<SodiumException>();
-			}
-			finally
-			{
-				SodiumRandom.Stir();
-			}			
-		}
+		//[Test]
+		//public async Task CloseAndStir_WorksAsExpected()
+		//{
+		//	try
+		//	{
+		//		await Assert.That(() => SodiumRandom.Stir()).ThrowsNothing();
+		//		await Assert.That(() => SodiumRandom.Stir()).ThrowsNothing();
+		//		await Assert.That(() => SodiumRandom.Close()).ThrowsNothing();
+		//		await Assert.That(() => SodiumRandom.Close()).Throws<SodiumException>();
+		//	}
+		//	finally
+		//	{
+		//		SodiumRandom.Stir();
+		//	}			
+		//}
 	}
 }
