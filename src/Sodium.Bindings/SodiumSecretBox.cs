@@ -175,7 +175,7 @@ namespace Sodium
 			var nonce = ciphertext.Slice(0, NonceLen);
 			var cipher = ciphertext.Slice(NonceLen);
 			SodiumBindings.EnsureInitialized();
-			int rc = Libsodium.crypto_secretbox_open_easy(plaintext, cipher, (ulong)ciphertext.Length, nonce, key);
+			int rc = Libsodium.crypto_secretbox_open_easy(plaintext, cipher, (ulong)cipher.Length, nonce, key);
 			if (rc != 0)
 			{
 				throw new SodiumException("Couldn't decrypt message. Verification failed");
